@@ -1,0 +1,30 @@
+﻿Column,Unit,Description,Data_Type
+Rüblər,Period (YYYY Q),Rüblər,Categorical
+Year,Year,Year,Integer
+Quarter,Quarter (1-4),Quarter,Integer
+Time_Index,Sequential Index,Sequential time index for modeling,Integer
+Nağd_pul_kredit_satışı,Million AZN,TARGET: Cash loan sales (to predict),Float
+GDP,Million AZN,GDP,Float
+Dövlət_Gəlirləri,Million AZN,Dövlət Gəlirləri,Float
+Dövlət_Xərcləri,Million AZN,Dövlət Xərcləri,Float
+Əhalinin_nominal_gəlirləri,Million AZN,Əhalinin nominal gəlirləri,Float
+Əhalinin_banklardakı_əmanətləri,Million AZN,Əhalinin banklardakı əmanətləri,Float
+Orta_aylıq_əməkhaqqı,Million AZN,Orta aylıq əməkhaqqı,Float
+Xarici_ticarət_dövriyyəsi,Million AZN,Xarici ticarət dövriyyəsi,Float
+İxrac,Million AZN,İxrac,Float
+İdxal,Million AZN,İdxal,Float
+Pul_bazası,Million AZN,Pul bazası,Float
+Oil_Price,$/barrel,Oil price (Brent crude),Float
+Tikinti-quraşdırma_işlərinə_sərf_edilmiş_vəsait,Million AZN,Tikinti-quraşdırma işlərinə sərf edilmiş vəsait,Float
+İstehlak_xərcləri,Million AZN,İstehlak xərcləri,Float
+Yaşayış_evlərinin_tikintisinə_yönəldilmiş_investisiyalar,Million AZN,Yaşayış evlərinin tikintisinə yönəldilmiş investisiyalar,Float
+Mənzil_qiymətləri,Million AZN,Mənzil qiymətləri,Float
+Müştərilərə_verilmiş_kreditlər,Million AZN,Müştərilərə verilmiş kreditlər,Float
+NPLs,Million AZN,Non-Performing Loans,Float
+ROA,Percentage (%),Return on Assets,Float
+ROE,Percentage (%),Return on Equity,Float
+Net_Interest_Margin,Percentage (%),Net Interest Margin,Float
+Efficiency_Ratio,Percentage (%),Efficiency Ratio,Float
+Loan-to-Deposit_Ratio,Percentage (%),Loan-to-Deposit Ratio,Float
+Müştəri_sayı,Count,Müştəri sayı,Integer
+Uçot_faiz_dərəcəsi,Percentage (%),Uçot faiz dərəcəsi,Float
