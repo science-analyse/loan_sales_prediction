@@ -1,3 +1,45 @@
+# Python
 venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info
+dist
+build
+
+# IDEs
+.vscode
+.idea
+.DS_Store
 .claude
+
+# Node
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Next.js
+.next
+out
+.vercel
+
+# Analytics Dashboard
 analytics-dashboard/node_modules
+analytics-dashboard/.next
+analytics-dashboard/out
+analytics-dashboard/.env*.local
+
+# Frontend
+frontend/node_modules
+frontend/dist
+frontend/.env*.local
+
+# Misc
+.env
+.env.local
+*.log
