@@ -38,6 +38,16 @@ app.include_router(statistics.router, prefix="/api/statistics", tags=["📈 Stat
 app.include_router(predictions.router, prefix="/api/predictions", tags=["🔮 Proqnozlar"])
 app.include_router(insights.router, prefix="/api/insights", tags=["💡 Təhlillər"])
 
+# Health check - must be defined before catch-all route
+@app.get("/health")
+async def health_check():
+    """Sağlamlıq yoxlaması"""
+    return {
+        "status": "sağlam",
+        "tarix": datetime.now().isoformat(),
+        "xidmət": "işləyir"
+    }
+
 # Serve static frontend files
 static_dir = Path(__file__).parent.parent.parent / "frontend" / "dist"
 if static_dir.exists():
@@ -54,7 +64,7 @@ if static_dir.exists():
     @app.get("/{full_path:path}")
     async def catch_all(full_path: str):
         """Catch all routes for SPA"""
-        if full_path.startswith(("api/", "docs", "redoc", "openapi.json")):
+        if full_path.startswith(("api/", "docs", "redoc", "openapi.json", "health")):
             raise HTTPException(status_code=404, detail="Not found")
         index_file = static_dir / "index.html"
         if index_file.exists():
@@ -81,15 +91,6 @@ else:
             },
             "təsvir": "Bu API kredit satışı məlumatları üçün ətraflı analitika, statistik təhlillər və proqnozlaşdırma imkanları təqdim edir."
         }
-
-@app.get("/health")
-async def health_check():
-    """Sağlamlıq yoxlaması"""
-    return {
-        "status": "sağlam",
-        "tarix": datetime.now().isoformat(),
-        "xidmət": "işləyir"
-    }
 
 if __name__ == "__main__":
     uvicorn.run(
