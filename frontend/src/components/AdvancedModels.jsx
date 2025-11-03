@@ -94,7 +94,7 @@ const AdvancedModels = () => {
     );
   }
 
-  const model Details = modelsInfo.models?.find(m => m.id === selectedModel);
+  const modelDetails = modelsInfo.models?.find(m => m.id === selectedModel);
 
   return (
     <div className="space-y-6">
