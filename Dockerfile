@@ -1,38 +1,62 @@
-# Multi-stage build for smaller image size
-FROM python:3.10-slim as builder
+# ============================================
+# Stage 1: Build Frontend
+# ============================================
+FROM node:20-alpine as frontend-builder
 
-# Set working directory
+WORKDIR /frontend
+
+# Copy frontend package files
+COPY frontend/package*.json ./
+
+# Install ALL dependencies (including dev deps needed for build)
+RUN npm ci
+
+# Copy frontend source
+COPY frontend/ ./
+
+# Build frontend for production
+RUN npm run build
+
+# ============================================
+# Stage 2: Build Backend Dependencies
+# ============================================
+FROM python:3.10-slim as backend-builder
+
 WORKDIR /app
 
-# Install system dependencies
+# Install system dependencies for Python packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     g++ \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements first for better caching
-COPY requirements.txt .
+# Copy backend requirements
+COPY backend/requirements.txt ./
 
 # Install Python dependencies
 RUN pip install --no-cache-dir --user -r requirements.txt
 
-# Final stage
+# ============================================
+# Stage 3: Final Production Image
+# ============================================
 FROM python:3.10-slim
 
-# Set working directory
 WORKDIR /app
 
 # Copy Python dependencies from builder
-COPY --from=builder /root/.local /root/.local
+COPY --from=backend-builder /root/.local /root/.local
 
 # Make sure scripts in .local are usable
 ENV PATH=/root/.local/bin:$PATH
 
-# Copy application code
-COPY . .
+# Copy backend application code
+COPY backend/ ./
 
-# Create directory for data if it doesn't exist
-RUN mkdir -p /app/notebooks/data
+# Copy built frontend from frontend-builder
+COPY --from=frontend-builder /frontend/dist ./frontend/dist
+
+# Copy data file
+COPY notebooks/data/ml_ready_data.csv ./notebooks/data/
 
 # Expose port
 EXPOSE 8000
@@ -44,6 +68,7 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
+ENV ENVIRONMENT=production
 
 # Run the application
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]

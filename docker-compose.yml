@@ -5,7 +5,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile.unified
+      dockerfile: Dockerfile
     container_name: loan-analytics-app
     ports:
       - "8000:8000"  # Single port for both frontend and API
