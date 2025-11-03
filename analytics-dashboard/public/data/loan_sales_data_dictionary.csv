@@ -1,0 +1,28 @@
+Column,Unit,Description,Data_Type,Category,Min_Value,Max_Value,Source
+Rüblər,Period (YYYY Q),Time period in quarters (Quarter notation),Text,Time,2020 I,2025 II,Derived
+GDP,min AZN,Gross Domestic Product - total value of goods and services produced,Float,Macroeconomic,16450600,35748000,Azerbaijan State Statistics Committee
+Dövlət_Gəlirləri,min AZN,Government revenues - total income collected by the state,Float,Fiscal,4211800,13497800,Ministry of Finance
+Dövlət_Xərcləri,min AZN,Government expenditures - total spending by the state,Float,Fiscal,5254800,13244000,Ministry of Finance
+Əhalinin_nominal_gəlirləri,min AZN,Population nominal income - total gross income of households,Float,Socioeconomic,13442500,22057100,Azerbaijan State Statistics Committee
+Əhalinin_banklardakı_əmanətləri,min AZN,Population deposits in banks - total savings in banking system,Float,Financial,7706400,15437000,Central Bank of Azerbaijan
+Orta_aylıq_əməkhaqqı,min AZN,Average monthly salary - mean wage per worker,Float,Socioeconomic,706.6,1097.3,Azerbaijan State Statistics Committee
+Xarici_ticarət_dövriyyəsi,min AZN,Foreign trade turnover - total value of exports and imports,Float,Trade,8593330,26130020,Azerbaijan State Statistics Committee
+İxrac,min AZN,Exports - value of goods and services sold abroad,Float,Trade,4594080,19438310,Azerbaijan State Statistics Committee
+İdxal,min AZN,Imports - value of goods and services purchased from abroad,Float,Trade,3999250,10905160,Azerbaijan State Statistics Committee
+Pul_bazası,min AZN,Monetary base - total amount of currency in circulation and reserves,Float,Monetary,10066900,21498100,Central Bank of Azerbaijan
+Oil_Price,$/barrel,Oil price (Brent crude) - international benchmark for crude oil,Float,Commodity,49.88,193.02,International Energy Markets
+Tikinti-quraşdırma_işlərinə_sərf_edilmiş_vəsait,min AZN,Construction and installation work expenses - spending on construction projects,Float,Real Estate,931341.1,5155278.9,Azerbaijan State Statistics Committee
+İstehlak_xərcləri,min AZN,Consumer expenditures - household spending on goods and services,Float,Socioeconomic,286589,374460,Azerbaijan State Statistics Committee
+Yaşayış_evlərinin_tikintisinə_yönəldilmiş_investisiyalar,min AZN,Residential construction investments - capital directed to housing projects,Float,Real Estate,172795.1,907499.9,Azerbaijan State Statistics Committee
+Mənzil_qiymətləri,min AZN,Housing prices - average cost of residential properties,Float,Real Estate,1.223447,1.794618,Real Estate Market Data
+Uçot_faiz_dərəcəsi,Percentage (%),Discount rate - key interest rate set by Central Bank,Float,Monetary,6.25,9.0,Central Bank of Azerbaijan
+Kumulyativ_satish,min AZN,Cumulative sales - running total of loan sales from start of period,Float,Banking,46642841.49,444555889.29,Internal Bank Data
+Nağd_pul_kredit_satışı,min AZN,Cash loan sales - TARGET VARIABLE: quarterly loan disbursements to customers,Float,Banking (Target),15709384.47,126285413.8,Internal Bank Data
+Portfel,min AZN,Total loans issued to customers - outstanding loan portfolio,Float,Banking,337946.34,817018.93,Internal Bank Data
+NPLs,min AZN,Non-Performing Loans - loans in default or close to default (>90 days overdue),Float,Banking,13.57,42.22,Internal Bank Data
+ROA,Percentage (%),Return on Assets - profitability ratio (Net Income / Total Assets),Float,Banking,0.38,5.26,Internal Bank Data
+ROE,Percentage (%),Return on Equity - profitability ratio (Net Income / Shareholder Equity),Float,Banking,2.46,30.01,Internal Bank Data
+Net_Interest_Margin,Percentage (%),Net Interest Margin - difference between interest income and interest paid,Float,Banking,2.38,3.28,Internal Bank Data
+Efficiency_Ratio,Percentage (%),Efficiency Ratio - operating expenses as percentage of revenue (lower is better),Float,Banking,59.26,76.90,Internal Bank Data
+Loan-to-Deposit_Ratio,Ratio,Loan-to-Deposit Ratio - loans divided by deposits (liquidity indicator),Float,Banking,1.07,1.51,Internal Bank Data
+Müştəri_sayı,Count,Number of customers - total active clients in the quarter,Integer,Banking,16316,252200,Internal Bank Data
