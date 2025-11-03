@@ -3,24 +3,24 @@ Rüblər,Period (YYYY Q),Rüblər,Categorical
 Year,Year,Year,Integer
 Quarter,Quarter (1-4),Quarter,Integer
 Time_Index,Sequential Index,Sequential time index for modeling,Integer
-Nağd_pul_kredit_satışı,Million AZN,TARGET: Cash loan sales (to predict),Float
-GDP,Million AZN,GDP,Float
-Dövlət_Gəlirləri,Million AZN,Dövlət Gəlirləri,Float
-Dövlət_Xərcləri,Million AZN,Dövlət Xərcləri,Float
-Əhalinin_nominal_gəlirləri,Million AZN,Əhalinin nominal gəlirləri,Float
-Əhalinin_banklardakı_əmanətləri,Million AZN,Əhalinin banklardakı əmanətləri,Float
-Orta_aylıq_əməkhaqqı,Million AZN,Orta aylıq əməkhaqqı,Float
-Xarici_ticarət_dövriyyəsi,Million AZN,Xarici ticarət dövriyyəsi,Float
-İxrac,Million AZN,İxrac,Float
-İdxal,Million AZN,İdxal,Float
-Pul_bazası,Million AZN,Pul bazası,Float
+Nağd_pul_kredit_satışı,min AZN,TARGET: Cash loan sales (to predict),Float
+GDP,min AZN,GDP,Float
+Dövlət_Gəlirləri,min AZN,Dövlət Gəlirləri,Float
+Dövlət_Xərcləri,min AZN,Dövlət Xərcləri,Float
+Əhalinin_nominal_gəlirləri,min AZN,Əhalinin nominal gəlirləri,Float
+Əhalinin_banklardakı_əmanətləri,min AZN,Əhalinin banklardakı əmanətləri,Float
+Orta_aylıq_əməkhaqqı,min AZN,Orta aylıq əməkhaqqı,Float
+Xarici_ticarət_dövriyyəsi,min AZN,Xarici ticarət dövriyyəsi,Float
+İxrac,min AZN,İxrac,Float
+İdxal,min AZN,İdxal,Float
+Pul_bazası,min AZN,Pul bazası,Float
 Oil_Price,$/barrel,Oil price (Brent crude),Float
-Tikinti-quraşdırma_işlərinə_sərf_edilmiş_vəsait,Million AZN,Tikinti-quraşdırma işlərinə sərf edilmiş vəsait,Float
-İstehlak_xərcləri,Million AZN,İstehlak xərcləri,Float
-Yaşayış_evlərinin_tikintisinə_yönəldilmiş_investisiyalar,Million AZN,Yaşayış evlərinin tikintisinə yönəldilmiş investisiyalar,Float
-Mənzil_qiymətləri,Million AZN,Mənzil qiymətləri,Float
-Müştərilərə_verilmiş_kreditlər,Million AZN,Müştərilərə verilmiş kreditlər,Float
-NPLs,Million AZN,Non-Performing Loans,Float
+Tikinti-quraşdırma_işlərinə_sərf_edilmiş_vəsait,min AZN,Tikinti-quraşdırma işlərinə sərf edilmiş vəsait,Float
+İstehlak_xərcləri,min AZN,İstehlak xərcləri,Float
+Yaşayış_evlərinin_tikintisinə_yönəldilmiş_investisiyalar,min AZN,Yaşayış evlərinin tikintisinə yönəldilmiş investisiyalar,Float
+Mənzil_qiymətləri,min AZN,Mənzil qiymətləri,Float
+Müştərilərə_verilmiş_kreditlər,min AZN,Müştərilərə verilmiş kreditlər,Float
+NPLs,min AZN,Non-Performing Loans,Float
 ROA,Percentage (%),Return on Assets,Float
 ROE,Percentage (%),Return on Equity,Float
 Net_Interest_Margin,Percentage (%),Net Interest Margin,Float
