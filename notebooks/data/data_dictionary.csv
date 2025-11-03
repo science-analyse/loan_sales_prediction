@@ -1,4 +1,4 @@
-﻿Column,Unit,Description,Data_Type
+Column,Unit,Description,Data_Type
 Rüblər,Period (YYYY Q),Rüblər,Categorical
 Year,Year,Year,Integer
 Quarter,Quarter (1-4),Quarter,Integer
@@ -19,7 +19,7 @@ Tikinti-quraşdırma_işlərinə_sərf_edilmiş_vəsait,min AZN,Tikinti-quraşd�
 İstehlak_xərcləri,min AZN,İstehlak xərcləri,Float
 Yaşayış_evlərinin_tikintisinə_yönəldilmiş_investisiyalar,min AZN,Yaşayış evlərinin tikintisinə yönəldilmiş investisiyalar,Float
 Mənzil_qiymətləri,min AZN,Mənzil qiymətləri,Float
-Müştərilərə_verilmiş_kreditlər,min AZN,Müştərilərə verilmiş kreditlər,Float
+Portfel,min AZN,Müştərilərə verilmiş kreditlər,Float
 NPLs,min AZN,Non-Performing Loans,Float
 ROA,Percentage (%),Return on Assets,Float
 ROE,Percentage (%),Return on Equity,Float

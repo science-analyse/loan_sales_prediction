@@ -1,5 +1,5 @@
 Column,Unit,Description,Data_Type,Category,Min_Value,Max_Value,Source
-Rüblər,Period (YYYY Q),Time period in quarters (Quarter notation),Text,Time,"2020 I","2025 II",Derived
+Rüblər,Period (YYYY Q),Time period in quarters (Quarter notation),Text,Time,2020 I,2025 II,Derived
 GDP,min AZN,Gross Domestic Product - total value of goods and services produced,Float,Macroeconomic,16450600,35748000,Azerbaijan State Statistics Committee
 Dövlət_Gəlirləri,min AZN,Government revenues - total income collected by the state,Float,Fiscal,4211800,13497800,Ministry of Finance
 Dövlət_Xərcləri,min AZN,Government expenditures - total spending by the state,Float,Fiscal,5254800,13244000,Ministry of Finance
@@ -18,7 +18,7 @@ Mənzil_qiymətləri,min AZN,Housing prices - average cost of residential proper
 Uçot_faiz_dərəcəsi,Percentage (%),Discount rate - key interest rate set by Central Bank,Float,Monetary,6.25,9.0,Central Bank of Azerbaijan
 Kumulyativ_satish,min AZN,Cumulative sales - running total of loan sales from start of period,Float,Banking,46642841.49,444555889.29,Internal Bank Data
 Nağd_pul_kredit_satışı,min AZN,Cash loan sales - TARGET VARIABLE: quarterly loan disbursements to customers,Float,Banking (Target),15709384.47,126285413.8,Internal Bank Data
-Müştərilərə_verilmiş_kreditlər,min AZN,Total loans issued to customers - outstanding loan portfolio,Float,Banking,337946.34,817018.93,Internal Bank Data
+Portfel,min AZN,Total loans issued to customers - outstanding loan portfolio,Float,Banking,337946.34,817018.93,Internal Bank Data
 NPLs,min AZN,Non-Performing Loans - loans in default or close to default (>90 days overdue),Float,Banking,13.57,42.22,Internal Bank Data
 ROA,Percentage (%),Return on Assets - profitability ratio (Net Income / Total Assets),Float,Banking,0.38,5.26,Internal Bank Data
 ROE,Percentage (%),Return on Equity - profitability ratio (Net Income / Shareholder Equity),Float,Banking,2.46,30.01,Internal Bank Data
