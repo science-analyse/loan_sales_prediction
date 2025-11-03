@@ -15,6 +15,8 @@ class DataLoader:
         # Məlumat faylının yolu
         # Try multiple paths for different deployment scenarios
         possible_paths = [
+            # Analytics dashboard public data path (PREFERRED)
+            Path(__file__).parent.parent.parent.parent / "analytics-dashboard" / "public" / "data" / "ml_ready_data.csv",
             # Docker container path (data copied to /app/notebooks/data/)
             Path("/app/notebooks/data/ml_ready_data.csv"),
             # Development path (from backend directory)
