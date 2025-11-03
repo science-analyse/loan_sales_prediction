@@ -86,17 +86,19 @@ function App() {
   };
 
   const StatCard = ({ title, value, change, changePercent, icon: Icon, trend: trendDir }) => (
-    <div className="bg-white rounded-lg shadow p-6">
+    <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 hover:scale-105">
       <div className="flex items-center justify-between">
-        <div>
-          <p className="text-sm text-gray-600">{title}</p>
-          <p className="text-2xl font-bold mt-1">{formatNumber(value)}</p>
+        <div className="flex-1">
+          <p className="text-xs sm:text-sm font-medium text-gray-600 uppercase tracking-wide">{title}</p>
+          <p className="text-xl sm:text-2xl lg:text-3xl font-bold mt-2 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+            {formatNumber(value)}
+          </p>
           {change !== undefined && (
             <div className="flex items-center mt-2">
               {trendDir === 'up' && <ArrowUpRight className="h-4 w-4 text-green-500" />}
               {trendDir === 'down' && <ArrowDownRight className="h-4 w-4 text-red-500" />}
               {trendDir === 'neutral' && <Minus className="h-4 w-4 text-gray-500" />}
-              <span className={`text-sm ml-1 ${
+              <span className={`text-sm font-semibold ml-1 ${
                 trendDir === 'up' ? 'text-green-600' :
                 trendDir === 'down' ? 'text-red-600' :
                 'text-gray-600'
@@ -106,12 +108,12 @@ function App() {
             </div>
           )}
         </div>
-        <div className={`p-3 rounded-full ${
-          trendDir === 'up' ? 'bg-green-100' :
-          trendDir === 'down' ? 'bg-red-100' :
-          'bg-blue-100'
+        <div className={`p-4 rounded-2xl shadow-sm ${
+          trendDir === 'up' ? 'bg-gradient-to-br from-green-100 to-green-200' :
+          trendDir === 'down' ? 'bg-gradient-to-br from-red-100 to-red-200' :
+          'bg-gradient-to-br from-blue-100 to-blue-200'
         }`}>
-          <Icon className={`h-6 w-6 ${
+          <Icon className={`h-7 w-7 ${
             trendDir === 'up' ? 'text-green-600' :
             trendDir === 'down' ? 'text-red-600' :
             'text-blue-600'
@@ -207,20 +209,23 @@ function App() {
 
             {/* Trend Chart */}
             {trend && (
-              <div className="bg-white rounded-lg shadow p-6">
-                <h2 className="text-lg font-semibold mb-4">📈 Trend Təhlili</h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                  <div className="border rounded p-4">
-                    <p className="text-sm text-gray-600">Trend İstiqaməti</p>
-                    <p className="text-xl font-bold">{trend.ümumi_trend.trend_istiqaməti}</p>
+              <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+                <div className="flex items-center gap-2 mb-6">
+                  <TrendingUp className="h-6 w-6 text-blue-600" />
+                  <h2 className="text-xl font-bold text-gray-900">Trend Təhlili</h2>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                  <div className="border-2 border-blue-100 rounded-xl p-4 bg-gradient-to-br from-blue-50 to-white hover:shadow-md transition-all">
+                    <p className="text-xs font-medium text-gray-600 uppercase">Trend İstiqaməti</p>
+                    <p className="text-lg sm:text-xl font-bold mt-2 text-gray-900">{trend.ümumi_trend.trend_istiqaməti}</p>
                   </div>
-                  <div className="border rounded p-4">
-                    <p className="text-sm text-gray-600">R² (Güclülük)</p>
-                    <p className="text-xl font-bold">{trend.ümumi_trend.güclülük['R²']}</p>
+                  <div className="border-2 border-green-100 rounded-xl p-4 bg-gradient-to-br from-green-50 to-white hover:shadow-md transition-all">
+                    <p className="text-xs font-medium text-gray-600 uppercase">R² (Güclülük)</p>
+                    <p className="text-lg sm:text-xl font-bold mt-2 text-gray-900">{trend.ümumi_trend.güclülük['R²']}</p>
                   </div>
-                  <div className="border rounded p-4">
-                    <p className="text-sm text-gray-600">Rüblük Dəyişmə</p>
-                    <p className="text-xl font-bold">{formatNumber(trend.ümumi_trend.ortalama_rüblük_dəyişmə)}</p>
+                  <div className="border-2 border-purple-100 rounded-xl p-4 bg-gradient-to-br from-purple-50 to-white hover:shadow-md transition-all sm:col-span-2 lg:col-span-1">
+                    <p className="text-xs font-medium text-gray-600 uppercase">Rüblük Dəyişmə</p>
+                    <p className="text-lg sm:text-xl font-bold mt-2 text-gray-900">{formatNumber(trend.ümumi_trend.ortalama_rüblük_dəyişmə)}</p>
                   </div>
                 </div>
               </div>
@@ -228,12 +233,15 @@ function App() {
 
             {/* Risk Alert */}
             {executive && executive.risk_qiymətləndirməsi.səviyyə === 'Yüksək' && (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                <div className="flex items-center">
-                  <AlertTriangle className="h-5 w-5 text-red-600 mr-2" />
-                  <div>
-                    <p className="font-semibold text-red-800">Yüksək Risk Səviyyəsi</p>
-                    <p className="text-sm text-red-700">{executive.risk_qiymətləndirməsi.təsvir}</p>
+              <div className="bg-gradient-to-r from-red-50 to-orange-50 border-2 border-red-300 rounded-xl p-5 shadow-md animate-pulse">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                  <div className="p-3 bg-red-100 rounded-full">
+                    <AlertTriangle className="h-6 w-6 text-red-600" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-bold text-red-900 text-lg">⚠️ Yüksək Risk Səviyyəsi</p>
+                    <p className="text-sm text-red-700 mt-1">{executive.risk_qiymətləndirməsi.təsvir}</p>
+                    <p className="text-xs text-red-600 mt-2 font-medium">Diqqət tələb edir!</p>
                   </div>
                 </div>
               </div>
@@ -243,11 +251,15 @@ function App() {
 
         {activeTab === 'forecast' && forecast && (
           <div className="space-y-6">
-            <div className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-lg font-semibold mb-4">🔮 Gələcək Proqnozlar</h2>
+            <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+              <div className="flex items-center gap-2 mb-6">
+                <span className="text-3xl">🔮</span>
+                <h2 className="text-xl font-bold text-gray-900">Gələcək Proqnozlar</h2>
+              </div>
 
               {/* Forecast Chart */}
-              <ResponsiveContainer width="100%" height={400}>
+              <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-4 mb-6">
+                <ResponsiveContainer width="100%" height={400}>
                 <AreaChart data={forecast.proqnozlar}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="dövr" />
@@ -277,25 +289,26 @@ function App() {
                   />
                 </AreaChart>
               </ResponsiveContainer>
+              </div>
 
               {/* Forecast Table */}
-              <div className="mt-6 overflow-x-auto">
+              <div className="mt-6 overflow-x-auto rounded-xl border border-gray-200">
                 <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
+                  <thead className="bg-gradient-to-r from-blue-50 to-purple-50">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Dövr</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Proqnoz</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aşağı Sərhəd</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Yuxarı Sərhəd</th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Dövr</th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Proqnoz</th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider hidden sm:table-cell">Aşağı Sərhəd</th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider hidden sm:table-cell">Yuxarı Sərhəd</th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {forecast.proqnozlar.map((f, idx) => (
-                      <tr key={idx}>
-                        <td className="px-6 py-4 whitespace-nowrap font-medium">{f.dövr}</td>
-                        <td className="px-6 py-4 whitespace-nowrap">{formatNumber(f.kombinə_proqnoz)}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-gray-600">{formatNumber(f.aşağı_sərhəd_95)}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-gray-600">{formatNumber(f.yuxarı_sərhəd_95)}</td>
+                      <tr key={idx} className="hover:bg-blue-50 transition-colors">
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap font-bold text-blue-600">{f.dövr}</td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap font-semibold text-gray-900">{formatNumber(f.kombinə_proqnoz)}</td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-gray-600 hidden sm:table-cell">{formatNumber(f.aşağı_sərhəd_95)}</td>
+                        <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-gray-600 hidden sm:table-cell">{formatNumber(f.yuxarı_sərhəd_95)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -308,25 +321,47 @@ function App() {
         {activeTab === 'insights' && executive && (
           <div className="space-y-6">
             {/* Key Metrics */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white rounded-lg shadow p-6">
-                <h3 className="text-sm font-medium text-gray-600">Cari Dəyər</h3>
-                <p className="text-2xl font-bold mt-2">{formatNumber(executive.əsas_rəqəmlər.cari_dəyər.məbləğ)} min ₼</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-md p-6 border border-blue-200 hover:shadow-xl transition-all">
+                <h3 className="text-xs font-bold text-blue-700 uppercase tracking-wider">💵 Cari Dəyər</h3>
+                <p className="text-2xl sm:text-3xl font-bold mt-2 text-blue-900">{formatNumber(executive.əsas_rəqəmlər.cari_dəyər.məbləğ)}</p>
+                <p className="text-xs text-blue-600 mt-1">min ₼</p>
               </div>
-              <div className="bg-white rounded-lg shadow p-6">
-                <h3 className="text-sm font-medium text-gray-600">Rüb-Rüb Dəyişiklik</h3>
-                <p className={`text-2xl font-bold mt-2 ${
-                  executive.əsas_rəqəmlər.rüb_rüb_dəyişiklik.faiz > 0 ? 'text-green-600' : 'text-red-600'
+              <div className={`rounded-xl shadow-md p-6 border-2 hover:shadow-xl transition-all ${
+                executive.əsas_rəqəmlər.rüb_rüb_dəyişiklik.faiz > 0
+                  ? 'bg-gradient-to-br from-green-50 to-green-100 border-green-300'
+                  : 'bg-gradient-to-br from-red-50 to-red-100 border-red-300'
+              }`}>
+                <h3 className={`text-xs font-bold uppercase tracking-wider ${
+                  executive.əsas_rəqəmlər.rüb_rüb_dəyişiklik.faiz > 0 ? 'text-green-700' : 'text-red-700'
                 }`}>
+                  📊 Rüb-Rüb Dəyişiklik
+                </h3>
+                <p className={`text-2xl sm:text-3xl font-bold mt-2 ${
+                  executive.əsas_rəqəmlər.rüb_rüb_dəyişiklik.faiz > 0 ? 'text-green-700' : 'text-red-700'
+                }`}>
+                  {executive.əsas_rəqəmlər.rüb_rüb_dəyişiklik.faiz > 0 ? '+' : ''}
                   {executive.əsas_rəqəmlər.rüb_rüb_dəyişiklik.faiz}%
                 </p>
               </div>
-              <div className="bg-white rounded-lg shadow p-6">
-                <h3 className="text-sm font-medium text-gray-600">Risk Səviyyəsi</h3>
-                <p className={`text-2xl font-bold mt-2 ${
-                  executive.risk_qiymətləndirməsi.səviyyə === 'Yüksək' ? 'text-red-600' :
-                  executive.risk_qiymətləndirməsi.səviyyə === 'Orta' ? 'text-yellow-600' :
-                  'text-green-600'
+              <div className={`rounded-xl shadow-md p-6 border-2 hover:shadow-xl transition-all sm:col-span-2 lg:col-span-1 ${
+                executive.risk_qiymətləndirməsi.səviyyə === 'Yüksək'
+                  ? 'bg-gradient-to-br from-red-50 to-red-100 border-red-300' :
+                executive.risk_qiymətləndirməsi.səviyyə === 'Orta'
+                  ? 'bg-gradient-to-br from-yellow-50 to-yellow-100 border-yellow-300' :
+                  'bg-gradient-to-br from-green-50 to-green-100 border-green-300'
+              }`}>
+                <h3 className={`text-xs font-bold uppercase tracking-wider ${
+                  executive.risk_qiymətləndirməsi.səviyyə === 'Yüksək' ? 'text-red-700' :
+                  executive.risk_qiymətləndirməsi.səviyyə === 'Orta' ? 'text-yellow-700' :
+                  'text-green-700'
+                }`}>
+                  ⚠️ Risk Səviyyəsi
+                </h3>
+                <p className={`text-2xl sm:text-3xl font-bold mt-2 ${
+                  executive.risk_qiymətləndirməsi.səviyyə === 'Yüksək' ? 'text-red-700' :
+                  executive.risk_qiymətləndirməsi.səviyyə === 'Orta' ? 'text-yellow-700' :
+                  'text-green-700'
                 }`}>
                   {executive.risk_qiymətləndirməsi.səviyyə}
                 </p>
