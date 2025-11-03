@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  # FastAPI Backend Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: loan-analytics-api
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount data directory for accessing ml_ready_data.csv
+      - ./notebooks/data:/app/notebooks/data:ro
+      # Mount app directory for development (optional - comment out for production)
+      - ./backend/app:/app/app:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+      - ENVIRONMENT=production
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - loan-analytics-network
+
+  # Nginx Reverse Proxy (Optional - uncomment if needed)
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: loan-analytics-nginx
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+  #     - ./nginx/ssl:/etc/nginx/ssl:ro
+  #   depends_on:
+  #     - backend
+  #   restart: unless-stopped
+  #   networks:
+  #     - loan-analytics-network
+
+networks:
+  loan-analytics-network:
+    driver: bridge
+
+# Volumes for persistent data (if needed in future)
+volumes:
+  data-volume:
