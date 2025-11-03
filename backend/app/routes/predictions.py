@@ -572,11 +572,11 @@ async def get_advanced_forecast(
                 model = SARIMAXResults.load(model_path)
 
             # Make forecast
+            last_year = df['Year'].iloc[-1]
+            last_quarter = df['Quarter'].iloc[-1]
+
             if model_name == 'sarimax':
                 # Need exogenous variables for SARIMAX
-                last_year = df['Year'].iloc[-1]
-                last_quarter = df['Quarter'].iloc[-1]
-
                 exog_future = []
                 for i in range(1, n_periods + 1):
                     q = ((last_quarter + i - 1) % 4) + 1
@@ -585,11 +585,13 @@ async def get_advanced_forecast(
 
                 exog_df = pd.DataFrame(exog_future)
                 forecast_result = model.forecast(steps=n_periods, exog=exog_df)
+                # Get confidence intervals with exog
+                forecast_obj = model.get_forecast(steps=n_periods, exog=exog_df)
+                forecast_ci = forecast_obj.conf_int()
             else:
                 forecast_result = model.forecast(steps=n_periods)
-
-            # Get confidence intervals
-            forecast_ci = model.get_forecast(steps=n_periods).conf_int()
+                # Get confidence intervals without exog
+                forecast_ci = model.get_forecast(steps=n_periods).conf_int()
 
             last_year = df['Year'].iloc[-1]
             last_quarter = df['Quarter'].iloc[-1]
