@@ -34,9 +34,10 @@ app.add_middleware(
 
 # Include routers - THESE MUST BE FIRST
 app.include_router(dashboard_analytics.router, prefix="/api/analytics", tags=["📊 Dashboard Analytics"])
+app.include_router(dashboard_analytics.router, prefix="/api/predictions", tags=["🔮 Predictions"])  # Simple forecast for dashboard
 app.include_router(analytics.router, prefix="/api/az/analytics", tags=["📊 Analitika (AZ)"])
 app.include_router(statistics.router, prefix="/api/statistics", tags=["📈 Statistika"])
-app.include_router(predictions.router, prefix="/api/predictions", tags=["🔮 Proqnozlar"])
+app.include_router(predictions.router, prefix="/api/az/predictions", tags=["🔮 Proqnozlar (AZ)"])  # AZ endpoints
 app.include_router(insights.router, prefix="/api/insights", tags=["💡 Təhlillər"])
 
 # Health check

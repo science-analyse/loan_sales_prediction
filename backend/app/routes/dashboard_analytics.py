@@ -2,7 +2,7 @@
 Dashboard Analytics Routes - For Next.js Analytics Dashboard
 """
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from typing import List, Dict, Any
 import pandas as pd
 import numpy as np
@@ -168,5 +168,80 @@ async def get_correlations():
         matrix = corr_df.values.tolist()
 
         return {"variables": variables, "matrix": matrix}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/simple-forecast")
+async def get_simple_forecast(periods: int = Query(default=4, ge=1, le=12)):
+    """Simple forecast for Next.js dashboard"""
+    try:
+        df = data_loader.df
+
+        # Filter out rows with empty target values
+        df_valid = df[df['Nağd_pul_kredit_satışı'].notna()].copy()
+        y = df_valid['Nağd_pul_kredit_satışı'].values
+
+        # Get last valid values
+        last_year = int(df_valid['Year'].iloc[-1])
+        last_quarter = int(df_valid['Quarter'].iloc[-1])
+
+        # Historical data (last 12 quarters)
+        historical = []
+        for _, row in df_valid.tail(12).iterrows():
+            quarter = f"{int(row['Year'])}-Q{int(row['Quarter'])}"
+            historical.append({
+                "quarter": quarter,
+                "actual": round(clean_value(row['Nağd_pul_kredit_satışı']), 2)
+            })
+
+        # Simple forecast logic
+        ma_4 = np.mean(y[-4:])
+        weights = np.array([0.1, 0.2, 0.3, 0.4])
+        wma_4 = np.sum(y[-4:] * weights)
+
+        # Exponential smoothing
+        alpha = 0.3
+        ema = y[0]
+        for val in y[1:]:
+            ema = alpha * val + (1 - alpha) * ema
+
+        # Trend
+        recent_periods = np.arange(len(y[-8:]))
+        recent_values = y[-8:]
+        trend_coef = np.polyfit(recent_periods, recent_values, 1)
+        trend_slope = trend_coef[0]
+        trend_intercept = trend_coef[1]
+
+        # Generate forecasts
+        forecast = []
+        std = np.std(y[-8:])
+
+        for i in range(1, periods + 1):
+            quarter = ((last_quarter + i - 1) % 4) + 1
+            year = last_year + (last_quarter + i - 1) // 4
+            period_name = f"{year}-Q{quarter}"
+
+            # Methods
+            ma_forecast = ma_4
+            wma_forecast = wma_4
+            ema_forecast = ema
+            trend_forecast = trend_slope * (len(y) + i - 1) + trend_intercept
+
+            # Combined
+            combined = np.mean([ma_forecast, wma_forecast, ema_forecast, trend_forecast])
+            lower = combined - 1.96 * std
+            upper = combined + 1.96 * std
+
+            forecast.append({
+                "quarter": period_name,
+                "predicted": round(clean_value(combined), 2),
+                "lower_bound": round(clean_value(lower), 2),
+                "upper_bound": round(clean_value(upper), 2)
+            })
+
+        return {
+            "historical": historical,
+            "forecast": forecast
+        }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

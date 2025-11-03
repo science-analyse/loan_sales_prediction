@@ -10,10 +10,21 @@ import numpy as np
 from pathlib import Path
 import pickle
 import json
+import math
 
 from app.utils.data_loader import data_loader
 
 router = APIRouter()
+
+def clean_value(val):
+    """Clean value for JSON serialization"""
+    if pd.isna(val) or (isinstance(val, (int, float)) and math.isinf(val)):
+        return 0.0
+    if isinstance(val, (np.integer, np.floating)):
+        return float(val)
+    if isinstance(val, np.bool_):
+        return bool(val)
+    return val
 
 # Model paths
 # Use environment variable to determine path or auto-detect
@@ -39,12 +50,15 @@ async def get_simple_forecast(
     - periods: Gələcək neçə rüb üçün proqnoz (1-12 arası)
     """
     df = data_loader.df
-    y = df['Nağd_pul_kredit_satışı'].values
 
-    # Son dəyərlər
-    last_period = df['Rüblər'].iloc[-1]
-    last_year = df['Year'].iloc[-1]
-    last_quarter = df['Quarter'].iloc[-1]
+    # Filter out rows with empty/NaN target values
+    df_valid = df[df['Nağd_pul_kredit_satışı'].notna()].copy()
+    y = df_valid['Nağd_pul_kredit_satışı'].values
+
+    # Son dəyərlər (from last valid row)
+    last_period = df_valid['Rüblər'].iloc[-1]
+    last_year = df_valid['Year'].iloc[-1]
+    last_quarter = df_valid['Quarter'].iloc[-1]
     last_value = y[-1]
 
     # 1. Moving Average (son 4 rüb)
@@ -93,14 +107,14 @@ async def get_simple_forecast(
             "dövr": period_name,
             "il": int(year),
             "rüb": int(quarter),
-            "kombinə_proqnoz": round(combined_forecast, 2),
-            "aşağı_sərhəd_95": round(lower_bound, 2),
-            "yuxarı_sərhəd_95": round(upper_bound, 2),
+            "kombinə_proqnoz": round(clean_value(combined_forecast), 2),
+            "aşağı_sərhəd_95": round(clean_value(lower_bound), 2),
+            "yuxarı_sərhəd_95": round(clean_value(upper_bound), 2),
             "metodlar": {
-                "moving_average": round(ma_forecast, 2),
-                "weighted_ma": round(wma_forecast, 2),
-                "exponential_smoothing": round(ema_forecast, 2),
-                "trend_based": round(trend_forecast, 2)
+                "moving_average": round(clean_value(ma_forecast), 2),
+                "weighted_ma": round(clean_value(wma_forecast), 2),
+                "exponential_smoothing": round(clean_value(ema_forecast), 2),
+                "trend_based": round(clean_value(trend_forecast), 2)
             }
         })
 
@@ -142,14 +156,14 @@ async def get_simple_forecast(
         actual = y[i]
         pred_ma = np.mean(y[i-4:i])
         actual_vs_pred.append({
-            "faktiki": actual,
-            "proqnoz": pred_ma,
-            "xəta": abs(actual - pred_ma),
-            "xəta_faizi": abs(actual - pred_ma) / actual * 100 if actual != 0 else 0
+            "faktiki": clean_value(actual),
+            "proqnoz": clean_value(pred_ma),
+            "xəta": clean_value(abs(actual - pred_ma)),
+            "xəta_faizi": clean_value(abs(actual - pred_ma) / actual * 100 if actual != 0 else 0)
         })
 
-    avg_error = np.mean([x["xəta"] for x in actual_vs_pred])
-    avg_error_pct = np.mean([x["xəta_faizi"] for x in actual_vs_pred])
+    avg_error = clean_value(np.mean([x["xəta"] for x in actual_vs_pred]))
+    avg_error_pct = clean_value(np.mean([x["xəta_faizi"] for x in actual_vs_pred]))
 
     return {
         "proqnoz_nədir": {
@@ -164,10 +178,10 @@ async def get_simple_forecast(
         },
         "cari_vəziyyət": {
             "son_dövr": last_period,
-            "son_dəyər": round(last_value, 2),
-            "son_4_rüb_ortalama": round(ma_4, 2),
-            "dəyişiklik": round(last_value - ma_4, 2),
-            "dəyişiklik_faizi": round((last_value - ma_4) / ma_4 * 100, 2) if ma_4 != 0 else 0
+            "son_dəyər": round(clean_value(last_value), 2),
+            "son_4_rüb_ortalama": round(clean_value(ma_4), 2),
+            "dəyişiklik": round(clean_value(last_value - ma_4), 2),
+            "dəyişiklik_faizi": round(clean_value((last_value - ma_4) / ma_4 * 100 if ma_4 != 0 else 0), 2)
         },
         "proqnozlar": forecasts,
         "metodlar": method_explanations,
