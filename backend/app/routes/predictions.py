@@ -16,6 +16,8 @@ from app.utils.data_loader import data_loader
 router = APIRouter()
 
 # Model paths
+# Local: backend/app/routes/predictions.py -> notebooks/predictions/models (4 parents up to project root)
+# Docker: /app/app/routes/predictions.py -> /app/notebooks/predictions/models (3 parents to /app)
 MODELS_DIR = Path(__file__).parent.parent.parent.parent / "notebooks" / "predictions" / "models"
 
 
