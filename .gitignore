@@ -1,46 +1,29 @@
 # Python
-venv
-.DS_Store
-__pycache__
-*.pyc
-*.pyo
-*.pyd
-.Python
+__pycache__/
+*.py[cod]
+*$py.class
 *.so
-*.egg
-*.egg-info
-dist
-build
+.Python
+venv/
+env/
+ENV/
 
-# IDEs
-.vscode
-.idea
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
 .DS_Store
-.claude
+Thumbs.db
 
-# Node
-node_modules
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Next.js
-.next
-out
-.vercel
-
-# Analytics Dashboard
-analytics-dashboard/node_modules
-analytics-dashboard/.next
-analytics-dashboard/out
-analytics-dashboard/.env*.local
-
-# Frontend
-frontend/node_modules
-frontend/dist
-frontend/.env*.local
-
-# Misc
-.env
-.env.local
+# Logs
 *.log
+
+# Temporary files
+/tmp/
+*.tmp
+
+# CatBoost info
+notebooks/prediction/catboost_info/
