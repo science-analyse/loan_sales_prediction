@@ -72,7 +72,7 @@ This system predicts **quarterly loan sales** (Nağd pul kredit satışı) using
 
 ## 📁 Project Structure
 
-\`\`\`
+```
 loan_sales_prediction/
 │
 ├── app/                          # FastAPI Web Application
@@ -103,7 +103,7 @@ loan_sales_prediction/
 ├── start.py                      # Local development server
 ├── test_all_models.py            # Automated testing
 └── README.md                     # This file
-\`\`\`
+```
 
 ---
 
@@ -163,7 +163,7 @@ Decision Tree, KNN, CatBoost, LightGBM, SVR
 
 ### Local Setup
 
-\`\`\`bash
+```bash
 # Clone repository
 git clone https://github.com/Ismat-Samadov/loan_sales_prediction.git
 cd loan_sales_prediction
@@ -177,17 +177,17 @@ pip install -r requirements.txt
 
 # Start server
 python start.py
-\`\`\`
+```
 
 Visit: **http://localhost:8001**
 
 ### Docker Setup
 
-\`\`\`bash
+```bash
 # Build and run
 docker build -t loan-sales-prediction .
 docker run -p 8000:8000 loan-sales-prediction
-\`\`\`
+```
 
 Visit: **http://localhost:8000**
 
@@ -204,7 +204,7 @@ Visit: **http://localhost:8000**
 
 ### Python API
 
-\`\`\`python
+```python
 import requests
 
 # Make prediction
@@ -220,11 +220,11 @@ response = requests.post(
 data = response.json()
 print(f"Prediction: {data['prediction_formatted']}")
 print(f"R² Score: {data['metrics']['test_r2']}")
-\`\`\`
+```
 
 ### Command Line
 
-\`\`\`bash
+```bash
 # Health check
 curl http://localhost:8001/api/health
 
@@ -235,16 +235,16 @@ curl http://localhost:8001/api/models
 curl -X POST http://localhost:8001/api/predict \
   -H "Content-Type: application/json" \
   -d '{"model":"Ridge (α=1.0)","year":2025,"quarter":1}'
-\`\`\`
+```
 
 ---
 
 ## 📡 API Documentation
 
 ### Base URL
-\`\`\`
+```
 http://localhost:8001
-\`\`\`
+```
 
 ### Endpoints
 
@@ -252,13 +252,13 @@ http://localhost:8001
 Health check
 
 **Response:**
-\`\`\`json
+```json
 {
   "status": "healthy",
   "models_loaded": true,
   "total_models": 18
 }
-\`\`\`
+```
 
 #### `GET /api/models`
 Get all available models with performance metrics
@@ -267,16 +267,16 @@ Get all available models with performance metrics
 Make prediction with single model
 
 **Request:**
-\`\`\`json
+```json
 {
   "model": "Ridge (α=1.0)",
   "year": 2025,
   "quarter": 1
 }
-\`\`\`
+```
 
 **Response:**
-\`\`\`json
+```json
 {
   "success": true,
   "prediction": 125707885.55,
@@ -292,19 +292,19 @@ Make prediction with single model
     "test_mape": 7.578
   }
 }
-\`\`\`
+```
 
 #### `POST /api/compare`
 Compare multiple models
 
 **Request:**
-\`\`\`json
+```json
 {
   "models": ["Ridge (α=1.0)", "Lasso (α=1.0)", "Holt-Winters"],
   "year": 2025,
   "quarter": 1
 }
-\`\`\`
+```
 
 ---
 
@@ -320,8 +320,8 @@ See [DOCKER_DEPLOY.md](DOCKER_DEPLOY.md) for detailed instructions.
 2. Create Web Service on Render
 3. Settings:
    - Runtime: **Docker**
-   - Dockerfile Path: \`./Dockerfile\`
-   - Environment: \`PORT=8000\`
+   - Dockerfile Path: `./Dockerfile`
+   - Environment: `PORT=8000`
 4. Deploy
 
 **Build Time:** ~3-5 minutes
@@ -330,7 +330,7 @@ See [DOCKER_DEPLOY.md](DOCKER_DEPLOY.md) for detailed instructions.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| \`PORT\` | 8000 | Server port |
+| `PORT` | 8000 | Server port |
 
 ---
 
@@ -382,7 +382,7 @@ See [DOCKER_DEPLOY.md](DOCKER_DEPLOY.md) for detailed instructions.
 
 ## 🧪 Testing
 
-\`\`\`bash
+```bash
 # Test all 18 models
 python test_all_models.py
 
@@ -391,7 +391,7 @@ python test_all_models.py
 # ✅ TS Models Passed: 5/5  
 # ✅ Total Passed: 18/18
 # 🎉 ALL 18 MODELS WORKING PERFECTLY!
-\`\`\`
+```
 
 ---
 
