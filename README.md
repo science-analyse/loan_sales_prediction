@@ -1,6 +1,6 @@
 # 🏦 Loan Sales Prediction System
 
-> **Advanced Machine Learning System for Quarterly Loan Sales Forecasting**  
+> **Advanced Machine Learning System for Quarterly Loan Sales Forecasting**
 > Built with 18 trained models, PCA feature engineering, and executive-ready web interface
 
 [![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/)
@@ -13,7 +13,7 @@
 ## 📋 Table of Contents
 
 - [Overview](#-overview)
-- [Features](#-features)  
+- [Features](#-features)
 - [Project Structure](#-project-structure)
 - [Models](#-models)
 - [Installation](#-installation)
@@ -30,20 +30,20 @@ This system predicts **quarterly loan sales** (Nağd pul kredit satışı) using
 
 ### Key Metrics
 
-| Metric | Value |
-|--------|-------|
-| **Total Models** | 18 (13 ML + 5 TS) |
+| Metric                   | Value                 |
+| ------------------------ | --------------------- |
+| **Total Models**   | 18 (13 ML + 5 TS)     |
 | **Best R² Score** | 0.4274 (Holt-Winters) |
-| **Best MAPE** | 7.13% (Lasso α=1.0) |
-| **Features** | 6 (PCA from 28) |
-| **Training Data** | 2007-2024 (Quarterly) |
+| **Best MAPE**      | 7.13% (Lasso α=1.0)  |
+| **Features**       | 6 (PCA from 28)       |
+| **Training Data**  | 2007-2024 (Quarterly) |
 
 ### What It Provides
 
-✅ **18 Trained Models** (13 ML + 5 Time Series)  
-✅ **Real-time Predictions** via REST API  
-✅ **Historical Context** (5 years of data)  
-✅ **Scenario Analysis** (Optimistic/Base/Pessimistic)  
+✅ **18 Trained Models** (13 ML + 5 Time Series)
+✅ **Real-time Predictions** via REST API
+✅ **Historical Context** (5 years of data)
+✅ **Scenario Analysis** (Optimistic/Base/Pessimistic)
 ✅ **Executive Dashboard** (Mobile-responsive UI)
 
 ---
@@ -51,18 +51,21 @@ This system predicts **quarterly loan sales** (Nağd pul kredit satışı) using
 ## ✨ Features
 
 ### 🔮 Prediction Capabilities
+
 - **Single Model Prediction** - Get forecast from any of 18 models
 - **Multi-Model Comparison** - Compare up to 5 models simultaneously
 - **Scenario Planning** - View optimistic/base/pessimistic forecasts
 - **Historical Context** - See 5 years of historical data for same quarter
 
 ### 📊 Data & Models
+
 - **PCA Feature Engineering** - 28 economic indicators → 6 components
 - **Diverse Model Types** - Linear, Tree-based, Boosting, Time Series
 - **Real Trained Models** - All models trained on actual data (2007-2024)
 - **Production Ready** - Serialized with pickle for fast loading
 
 ### 🎨 User Interface
+
 - **Executive Dashboard** - Premium gradient design
 - **Mobile Responsive** - Works on phones, tablets, desktops
 - **Real-time Updates** - AJAX-powered predictions
@@ -111,43 +114,43 @@ loan_sales_prediction/
 
 ### Machine Learning Models (13)
 
-| Model | R² Score | MAPE | Type |
-|-------|----------|------|------|
-| **Lasso (α=1.0)** ⭐ | 0.4016 | 7.13% | Linear |
-| **Ridge (α=1.0)** | 0.3734 | 7.58% | Linear |
-| **Ridge (α=10.0)** | 0.3667 | 7.88% | Linear |
-| **ElasticNet** | 0.3665 | 7.80% | Linear |
-| **Gradient Boosting** | 0.3360 | 8.70% | Boosting |
-| **XGBoost** | 0.1804 | 8.98% | Boosting |
-| **Random Forest** | 0.0181 | 10.44% | Ensemble |
-| **AdaBoost** | 0.0040 | 10.14% | Boosting |
-| Decision Tree | -0.9686 | 14.59% | Tree |
-| K-Nearest Neighbors | -0.8323 | 12.42% | Instance |
-| CatBoost | -2.2682 | 18.08% | Boosting |
-| LightGBM | -7.6327 | 29.94% | Boosting |
-| Support Vector Regression | -8.0665 | 30.81% | Kernel |
+| Model                       | R² Score | MAPE   | Type     |
+| --------------------------- | --------- | ------ | -------- |
+| **Lasso (α=1.0)** ⭐ | 0.4016    | 7.13%  | Linear   |
+| **Ridge (α=1.0)**    | 0.3734    | 7.58%  | Linear   |
+| **Ridge (α=10.0)**   | 0.3667    | 7.88%  | Linear   |
+| **ElasticNet**        | 0.3665    | 7.80%  | Linear   |
+| **Gradient Boosting** | 0.3360    | 8.70%  | Boosting |
+| **XGBoost**           | 0.1804    | 8.98%  | Boosting |
+| **Random Forest**     | 0.0181    | 10.44% | Ensemble |
+| **AdaBoost**          | 0.0040    | 10.14% | Boosting |
+| Decision Tree               | -0.9686   | 14.59% | Tree     |
+| K-Nearest Neighbors         | -0.8323   | 12.42% | Instance |
+| CatBoost                    | -2.2682   | 18.08% | Boosting |
+| LightGBM                    | -7.6327   | 29.94% | Boosting |
+| Support Vector Regression   | -8.0665   | 30.81% | Kernel   |
 
 ### Time Series Models (5)
 
-| Model | R² Score | MAPE | Type |
-|-------|----------|------|------|
-| **Holt-Winters** ⭐ | 0.4274 | 7.85% | Exp Smoothing |
-| **SARIMA(1,1,1)(1,1,1,4)** | 0.0950 | 10.36% | Seasonal ARIMA |
-| ARIMA(2,1,2) | -0.1166 | 10.70% | ARIMA |
-| ARIMA(1,1,1) | -0.1580 | 11.18% | ARIMA |
-| SARIMAX(1,1,1)(1,1,1,4) | N/A | N/A | SARIMAX |
+| Model                            | R² Score | MAPE   | Type           |
+| -------------------------------- | --------- | ------ | -------------- |
+| **Holt-Winters** ⭐        | 0.4274    | 7.85%  | Exp Smoothing  |
+| **SARIMA(1,1,1)(1,1,1,4)** | 0.0950    | 10.36% | Seasonal ARIMA |
+| ARIMA(2,1,2)                     | -0.1166   | 10.70% | ARIMA          |
+| ARIMA(1,1,1)                     | -0.1580   | 11.18% | ARIMA          |
+| SARIMAX(1,1,1)(1,1,1,4)          | N/A       | N/A    | SARIMAX        |
 
 ### Performance Tiers
 
 **Top Performers (R² > 0.3):**
-🥇 Holt-Winters (0.4274)  
-🥈 Lasso α=1.0 (0.4016)  
+🥇 Holt-Winters (0.4274)
+🥈 Lasso α=1.0 (0.4016)
 🥉 Ridge α=1.0 (0.3734)
 
-**Advanced (R² > 0.1):**  
+**Advanced (R² > 0.1):**
 Ridge α=10.0, ElasticNet, Gradient Boosting, XGBoost
 
-**Experimental (R² < 0):**  
+**Experimental (R² < 0):**
 Decision Tree, KNN, CatBoost, LightGBM, SVR
 
 ---
@@ -242,6 +245,7 @@ curl -X POST http://localhost:8001/api/predict \
 ## 📡 API Documentation
 
 ### Base URL
+
 ```
 http://localhost:8001
 ```
@@ -249,9 +253,11 @@ http://localhost:8001
 ### Endpoints
 
 #### `GET /api/health`
+
 Health check
 
 **Response:**
+
 ```json
 {
   "status": "healthy",
@@ -261,12 +267,15 @@ Health check
 ```
 
 #### `GET /api/models`
+
 Get all available models with performance metrics
 
 #### `POST /api/predict`
+
 Make prediction with single model
 
 **Request:**
+
 ```json
 {
   "model": "Ridge (α=1.0)",
@@ -276,6 +285,7 @@ Make prediction with single model
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -295,9 +305,11 @@ Make prediction with single model
 ```
 
 #### `POST /api/compare`
+
 Compare multiple models
 
 **Request:**
+
 ```json
 {
   "models": ["Ridge (α=1.0)", "Lasso (α=1.0)", "Holt-Winters"],
@@ -329,19 +341,21 @@ See [DOCKER_DEPLOY.md](DOCKER_DEPLOY.md) for detailed instructions.
 ### Environment Variables
 
 | Variable | Default | Description |
-|----------|---------|-------------|
-| `PORT` | 8000 | Server port |
+| -------- | ------- | ----------- |
+| `PORT` | 8000    | Server port |
 
 ---
 
 ## 💻 Tech Stack
 
 ### Backend
+
 - **FastAPI 0.104** - Modern Python web framework
 - **Uvicorn 0.24** - ASGI server
 - **Pydantic** - Data validation
 
 ### Machine Learning
+
 - **scikit-learn 1.3.2** - ML algorithms
 - **statsmodels 0.14.0** - Time series
 - **xgboost 2.0.3** - Gradient boosting
@@ -349,15 +363,18 @@ See [DOCKER_DEPLOY.md](DOCKER_DEPLOY.md) for detailed instructions.
 - **catboost 1.2.2** - Gradient boosting
 
 ### Data Processing
+
 - **pandas 2.1.4** - Data manipulation
 - **numpy 1.26.4** - Numerical computing
 
 ### Frontend
+
 - **Vanilla JavaScript** - No frameworks
 - **CSS3** - Responsive design
 - **Chart.js Ready** - For future visualizations
 
 ### DevOps
+
 - **Docker** - Containerization
 - **Python 3.11** - Runtime
 - **Git/GitHub** - Version control
@@ -367,14 +384,16 @@ See [DOCKER_DEPLOY.md](DOCKER_DEPLOY.md) for detailed instructions.
 ## 📊 Performance
 
 ### Model Metrics
+
 - **Training Time**: ~5 minutes (all 18 models)
 - **Best R² Score**: 0.4274 (Holt-Winters)
 - **Best MAPE**: 7.13% (Lasso α=1.0)
 - **Training Data**: 2007-2024 (68 quarters)
 
 ### API Performance
+
 - **Cold Start**: ~2 seconds
-- **Warm Prediction**: <100ms  
+- **Warm Prediction**: <100ms
 - **Model Loading**: Cached after first load
 - **Memory Usage**: ~500MB (all models loaded)
 
@@ -420,31 +439,10 @@ Contributions welcome! Please:
 
 ---
 
-## 📄 License
-
-MIT License - see [LICENSE](LICENSE) file
-
----
-
-## 👤 Author
-
-**Ismat Samadov**
-
-- GitHub: [@Ismat-Samadov](https://github.com/Ismat-Samadov)
-- LinkedIn: [ismat-samadov](https://www.linkedin.com/in/ismat-samadov)
-
----
-
-## 📞 Support
-
-For support, email ismetsemedov@gmail.com or open an issue.
-
----
-
 **⭐ Star this repo if you find it helpful!**
 
 ---
 
-*Last Updated: November 5, 2024*  
-*Version: 1.0.0*  
+*Last Updated: November 5, 2024*
+*Version: 1.0.0*
 *Status: Production Ready* ✅
