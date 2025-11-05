@@ -1,219 +1,450 @@
-# 💰 Kredit Satışı Analitika / Loan Sales Analytics
+# 🏦 Loan Sales Prediction System
 
-Full-stack analitika və proqnozlaşdırma tətbiqi. Nağd pul kredit satışı məlumatları üçün ətraflı analitika, trend təhlili və gələcək proqnozlar.
+> **Advanced Machine Learning System for Quarterly Loan Sales Forecasting**  
+> Built with 18 trained models, PCA feature engineering, and executive-ready web interface
 
-## 🎯 Xüsusiyyətlər
-
-### 📊 Dashboard
-- **Əsas Göstəricilər**: Son dövr, ortalama, minimum, maksimum
-- **Trend Təhlili**: İstiqamət, güclülük (R²), rüblük dəyişmə
-- **Risk Qiymətləndirməsi**: Avtomatik risk səviyyəsi müəyyənləşdirmə
-- **İnteraktiv Qrafiklər**: Real-time məlumat vizuallaşdırması
-
-### 🔮 Proqnoz
-- **Kombinə Proqnoz Modeli**: Moving Average, Weighted MA, Exponential Smoothing
-- **Etibar İntervalları**: 95% etibar sərhədləri
-- **Vizual Proqnozlar**: Area chart ilə trend göstərimi
-- **Rüblük Proqnozlar**: Q1, Q2, Q3, Q4 üçün ayrıca proqnozlar
-
-### 💡 Təhlillər
-- **İcraçı Xülasəsi**: Əsas rəqəmlər və dəyişikliklər
-- **Risk Təhlili**: Dərinlikli risk qiymətləndirməsi
-- **Biznes Tövsiyələri**: Actionable insights
-- **Prioritetli Məsələlər**: Diqqət tələb edən sahələr
-
-### 📅 Rüblük Təhlil
-- **Rüblər Üzrə Müqayisə**: Q1-Q4 statistikası
-- **Ən Yaxşı/Ən Zəif Rüblər**: Performance rankings
-- **Səbəb Təhlili**: Niyə yaxşı/zəif olduğunu izah edir
-- **Strategiya Tövsiyələri**: Hər rüb üçün xüsusi tövsiyələr
-
-## 🛠️ Texnologiyalar
-
-### Backend
-- **FastAPI**: Yüksək performanslı Python web framework
-- **Pandas & NumPy**: Data analizi
-- **SciPy & Statsmodels**: Statistik analiz
-- **Scikit-learn**: Machine learning modellər
-
-### Frontend
-- **React 18**: Modern UI library
-- **Vite**: Lightning-fast build tool
-- **Tailwind CSS**: Utility-first CSS framework
-- **Recharts**: Data visualization
-- **Axios**: HTTP client
-
-### Deployment
-- **Docker**: Containerization
-- **Docker Compose**: Multi-container orchestration
-- **Single-container deployment**: Cost-effective unified deployment
-
-## 🚀 Quraşdırma
-
-### Development Mode
-
-#### Backend
-```bash
-cd backend
-pip install -r requirements.txt
-uvicorn app.main:app --reload
-```
-
-#### Frontend
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Frontend: http://localhost:5173
-Backend API: http://localhost:8000
-API Docs: http://localhost:8000/docs
-
-### Production Deployment (Single Container)
-
-```bash
-# Build və deploy et
-docker-compose up --build -d
-
-# Tətbiqi aç
-open http://localhost:8000
-```
-
-Daha ətraflı məlumat üçün bax: [DEPLOY.md](./DEPLOY.md)
-
-## 📁 Struktur
-
-```
-loan_sales_prediction/
-├── backend/                  # FastAPI backend
-│   ├── app/
-│   │   ├── main.py          # Ana tətbiq (static files serveri daxil)
-│   │   ├── routes/          # API route-ları
-│   │   │   ├── analytics.py
-│   │   │   ├── statistics.py
-│   │   │   ├── predictions.py
-│   │   │   └── insights.py
-│   │   └── utils/
-│   │       └── data_loader.py
-│   └── requirements.txt
-├── frontend/                 # React frontend
-│   ├── src/
-│   │   ├── App.jsx          # Ana komponent
-│   │   ├── services/
-│   │   │   └── api.js       # API inteqrasiyası
-│   │   └── index.css
-│   ├── dist/                # Production build (git ignored)
-│   ├── package.json
-│   └── tailwind.config.js
-├── notebooks/               # Data analizi
-│   └── data/
-│       └── ml_ready_data.csv
-├── Dockerfile.unified       # Unified Docker build
-├── docker-compose.yml       # Docker compose konfiqurasiyası
-├── DEPLOY.md               # Deployment guide
-└── README.md               # Bu fayl
-```
-
-## 🔌 API Endpoints
-
-### Analytics
-- `GET /api/analytics/dashboard` - Əsas dashboard məlumatları
-- `GET /api/analytics/detailed-statistics` - Ətraflı statistika
-- `GET /api/analytics/outlier-analysis` - Outlier təhlili
-- `GET /api/analytics/trend-analysis` - Trend təhlili
-- `GET /api/analytics/quarterly-insights` - Rüblük insights
-
-### Statistics
-- `GET /api/statistics/descriptive` - Təsviri statistika
-- `GET /api/statistics/correlation` - Korrelyasiya analizi
-- `GET /api/statistics/normality-tests` - Normallik testləri
-
-### Predictions
-- `GET /api/predictions/simple-forecast?periods=4` - Sadə proqnoz
-- `GET /api/predictions/seasonal-forecast?periods=4` - Seasonal proqnoz
-- `GET /api/predictions/confidence-levels` - Etibar səviyyələri
-- `GET /api/predictions/model-comparison` - Model müqayisəsi
-
-### Insights
-- `GET /api/insights/executive-summary` - İcraçı xülasəsi
-- `GET /api/insights/performance-metrics` - Performance metrikləri
-- `GET /api/insights/risk-analysis` - Risk təhlili
-- `GET /api/insights/comparative-analysis` - Müqayisəli təhlil
-- `GET /api/insights/action-plan` - Fəaliyyət planı
-
-## 🎨 Design Features
-
-### Responsive Design
-- Mobile-first approach
-- Breakpoints: sm (640px), md (768px), lg (1024px)
-- Horizontal scroll for tabs on mobile
-- Hidden columns on small screens
-
-### Modern UI
-- Gradient backgrounds
-- Hover effects and animations
-- Smooth transitions
-- Card-based layout
-- Color-coded insights (green/yellow/red)
-
-### Accessibility
-- Clear contrast ratios
-- Readable font sizes
-- Icon support
-- Loading states
-- Error handling
-
-## 📊 Data Requirements
-
-### Input Data Format
-CSV faylı aşağıdakı sütunlara malik olmalıdır:
-- **DATE**: Tarix (YYYY-MM-DD)
-- **Sum_cashLoan**: Kredit məbləği (manat)
-
-Minimum 12 ay məlumat tələb olunur.
-
-## 🔒 Təhlükəsizlik
-
-- CORS konfiqurasiyası
-- Environment variables
-- Docker isolation
-- Health checks
-- Error handling
-- Input validation
-
-## 📈 Performance
-
-- **Singleton DataLoader**: Data yalnız bir dəfə yüklənir
-- **Multi-stage Docker build**: Kiçik image ölçüsü
-- **Frontend caching**: Static assets cache
-- **Uvicorn workers**: Paralel request handling
-- **Gzip compression**: Reduced transfer size
-
-## 💰 Cost Optimization
-
-✅ Single container deployment
-✅ No separate database required
-✅ Minimal resource usage
-✅ Free tier compatible on most platforms
-
-## 📝 License
-
-Proprietary - Internal Use Only
-
-## 👥 Contributors
-
-- Data Science Team
-- Backend Development Team
-- Frontend Development Team
-
-## 📞 Support
-
-Problemlə qarşılaşsanız:
-1. Logları yoxlayın: `docker-compose logs -f app`
-2. Health check: `curl http://localhost:8000/health`
-3. API docs: http://localhost:8000/docs
+[![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.104-green.svg)](https://fastapi.tiangolo.com/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://www.docker.com/)
+[![Models](https://img.shields.io/badge/Models-18-success.svg)](#-models)
 
 ---
 
-Made with ❤️ for data-driven decision making
+## 📋 Table of Contents
+
+- [Overview](#-overview)
+- [Features](#-features)  
+- [Project Structure](#-project-structure)
+- [Models](#-models)
+- [Installation](#-installation)
+- [Usage](#-usage)
+- [API Documentation](#-api-documentation)
+- [Deployment](#-deployment)
+- [Tech Stack](#-tech-stack)
+
+---
+
+## 🎯 Overview
+
+This system predicts **quarterly loan sales** (Nağd pul kredit satışı) using 28 economic indicators transformed into 6 principal components via PCA.
+
+### Key Metrics
+
+| Metric | Value |
+|--------|-------|
+| **Total Models** | 18 (13 ML + 5 TS) |
+| **Best R² Score** | 0.4274 (Holt-Winters) |
+| **Best MAPE** | 7.13% (Lasso α=1.0) |
+| **Features** | 6 (PCA from 28) |
+| **Training Data** | 2007-2024 (Quarterly) |
+
+### What It Provides
+
+✅ **18 Trained Models** (13 ML + 5 Time Series)  
+✅ **Real-time Predictions** via REST API  
+✅ **Historical Context** (5 years of data)  
+✅ **Scenario Analysis** (Optimistic/Base/Pessimistic)  
+✅ **Executive Dashboard** (Mobile-responsive UI)
+
+---
+
+## ✨ Features
+
+### 🔮 Prediction Capabilities
+- **Single Model Prediction** - Get forecast from any of 18 models
+- **Multi-Model Comparison** - Compare up to 5 models simultaneously
+- **Scenario Planning** - View optimistic/base/pessimistic forecasts
+- **Historical Context** - See 5 years of historical data for same quarter
+
+### 📊 Data & Models
+- **PCA Feature Engineering** - 28 economic indicators → 6 components
+- **Diverse Model Types** - Linear, Tree-based, Boosting, Time Series
+- **Real Trained Models** - All models trained on actual data (2007-2024)
+- **Production Ready** - Serialized with pickle for fast loading
+
+### 🎨 User Interface
+- **Executive Dashboard** - Premium gradient design
+- **Mobile Responsive** - Works on phones, tablets, desktops
+- **Real-time Updates** - AJAX-powered predictions
+- **Model Selection** - Organized by performance tiers
+
+---
+
+## 📁 Project Structure
+
+\`\`\`
+loan_sales_prediction/
+│
+├── app/                          # FastAPI Web Application
+│   ├── main.py                   # API routes & business logic
+│   ├── static/
+│   │   ├── css/style.css         # Premium responsive styles
+│   │   └── js/main.js            # Client-side logic
+│   └── templates/index.html      # Main web interface
+│
+├── notebooks/
+│   ├── data/                     # Processed datasets
+│   │   ├── ml_ready_data.csv     # Historical sales data
+│   │   └── pca_features.csv      # PCA-transformed features
+│   │
+│   └── prediction/
+│       ├── models/               # 18 trained models
+│       │   ├── ml_*.pkl          # 13 ML models
+│       │   ├── ts_*.pkl          # 5 Time Series models
+│       │   ├── scaler.pkl        # Feature scaler
+│       │   └── model_registry.json
+│       └── train_all_models.py   # Training script
+│
+├── Dockerfile                    # Docker configuration
+├── docker-compose.yml            # Multi-container setup
+├── .dockerignore                 # Docker build exclusions
+├── requirements.txt              # Python dependencies
+├── render.yaml                   # Render.com deployment
+├── start.py                      # Local development server
+├── test_all_models.py            # Automated testing
+└── README.md                     # This file
+\`\`\`
+
+---
+
+## 🤖 Models
+
+### Machine Learning Models (13)
+
+| Model | R² Score | MAPE | Type |
+|-------|----------|------|------|
+| **Lasso (α=1.0)** ⭐ | 0.4016 | 7.13% | Linear |
+| **Ridge (α=1.0)** | 0.3734 | 7.58% | Linear |
+| **Ridge (α=10.0)** | 0.3667 | 7.88% | Linear |
+| **ElasticNet** | 0.3665 | 7.80% | Linear |
+| **Gradient Boosting** | 0.3360 | 8.70% | Boosting |
+| **XGBoost** | 0.1804 | 8.98% | Boosting |
+| **Random Forest** | 0.0181 | 10.44% | Ensemble |
+| **AdaBoost** | 0.0040 | 10.14% | Boosting |
+| Decision Tree | -0.9686 | 14.59% | Tree |
+| K-Nearest Neighbors | -0.8323 | 12.42% | Instance |
+| CatBoost | -2.2682 | 18.08% | Boosting |
+| LightGBM | -7.6327 | 29.94% | Boosting |
+| Support Vector Regression | -8.0665 | 30.81% | Kernel |
+
+### Time Series Models (5)
+
+| Model | R² Score | MAPE | Type |
+|-------|----------|------|------|
+| **Holt-Winters** ⭐ | 0.4274 | 7.85% | Exp Smoothing |
+| **SARIMA(1,1,1)(1,1,1,4)** | 0.0950 | 10.36% | Seasonal ARIMA |
+| ARIMA(2,1,2) | -0.1166 | 10.70% | ARIMA |
+| ARIMA(1,1,1) | -0.1580 | 11.18% | ARIMA |
+| SARIMAX(1,1,1)(1,1,1,4) | N/A | N/A | SARIMAX |
+
+### Performance Tiers
+
+**Top Performers (R² > 0.3):**
+🥇 Holt-Winters (0.4274)  
+🥈 Lasso α=1.0 (0.4016)  
+🥉 Ridge α=1.0 (0.3734)
+
+**Advanced (R² > 0.1):**  
+Ridge α=10.0, ElasticNet, Gradient Boosting, XGBoost
+
+**Experimental (R² < 0):**  
+Decision Tree, KNN, CatBoost, LightGBM, SVR
+
+---
+
+## 🔧 Installation
+
+### Prerequisites
+
+- Python 3.11+
+- Docker (optional)
+- 8GB RAM minimum
+- 2GB disk space
+
+### Local Setup
+
+\`\`\`bash
+# Clone repository
+git clone https://github.com/Ismat-Samadov/loan_sales_prediction.git
+cd loan_sales_prediction
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Start server
+python start.py
+\`\`\`
+
+Visit: **http://localhost:8001**
+
+### Docker Setup
+
+\`\`\`bash
+# Build and run
+docker build -t loan-sales-prediction .
+docker run -p 8000:8000 loan-sales-prediction
+\`\`\`
+
+Visit: **http://localhost:8000**
+
+---
+
+## 🎮 Usage
+
+### Web Interface
+
+1. **Select Model** - Choose from 18 trained models
+2. **Select Period** - Pick year and quarter (Q1-Q4)
+3. **Get Prediction** - Click "Predict" for single model
+4. **Compare Models** - Click "Compare Models" for analysis
+
+### Python API
+
+\`\`\`python
+import requests
+
+# Make prediction
+response = requests.post(
+    'http://localhost:8001/api/predict',
+    json={
+        'model': 'Ridge (α=1.0)',
+        'year': 2025,
+        'quarter': 1
+    }
+)
+
+data = response.json()
+print(f"Prediction: {data['prediction_formatted']}")
+print(f"R² Score: {data['metrics']['test_r2']}")
+\`\`\`
+
+### Command Line
+
+\`\`\`bash
+# Health check
+curl http://localhost:8001/api/health
+
+# Get all models
+curl http://localhost:8001/api/models
+
+# Make prediction
+curl -X POST http://localhost:8001/api/predict \
+  -H "Content-Type: application/json" \
+  -d '{"model":"Ridge (α=1.0)","year":2025,"quarter":1}'
+\`\`\`
+
+---
+
+## 📡 API Documentation
+
+### Base URL
+\`\`\`
+http://localhost:8001
+\`\`\`
+
+### Endpoints
+
+#### `GET /api/health`
+Health check
+
+**Response:**
+\`\`\`json
+{
+  "status": "healthy",
+  "models_loaded": true,
+  "total_models": 18
+}
+\`\`\`
+
+#### `GET /api/models`
+Get all available models with performance metrics
+
+#### `POST /api/predict`
+Make prediction with single model
+
+**Request:**
+\`\`\`json
+{
+  "model": "Ridge (α=1.0)",
+  "year": 2025,
+  "quarter": 1
+}
+\`\`\`
+
+**Response:**
+\`\`\`json
+{
+  "success": true,
+  "prediction": 125707885.55,
+  "prediction_formatted": "125,707,885.55",
+  "scenarios": {
+    "optimistic": 129695855.59,
+    "base": 125707885.55,
+    "pessimistic": 121719915.52
+  },
+  "historical": [...],
+  "metrics": {
+    "test_r2": 0.3734,
+    "test_mape": 7.578
+  }
+}
+\`\`\`
+
+#### `POST /api/compare`
+Compare multiple models
+
+**Request:**
+\`\`\`json
+{
+  "models": ["Ridge (α=1.0)", "Lasso (α=1.0)", "Holt-Winters"],
+  "year": 2025,
+  "quarter": 1
+}
+\`\`\`
+
+---
+
+## 🚀 Deployment
+
+### Render.com (Recommended)
+
+See [DOCKER_DEPLOY.md](DOCKER_DEPLOY.md) for detailed instructions.
+
+**Quick Steps:**
+
+1. Push to GitHub
+2. Create Web Service on Render
+3. Settings:
+   - Runtime: **Docker**
+   - Dockerfile Path: \`./Dockerfile\`
+   - Environment: \`PORT=8000\`
+4. Deploy
+
+**Build Time:** ~3-5 minutes
+
+### Environment Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| \`PORT\` | 8000 | Server port |
+
+---
+
+## 💻 Tech Stack
+
+### Backend
+- **FastAPI 0.104** - Modern Python web framework
+- **Uvicorn 0.24** - ASGI server
+- **Pydantic** - Data validation
+
+### Machine Learning
+- **scikit-learn 1.3.2** - ML algorithms
+- **statsmodels 0.14.0** - Time series
+- **xgboost 2.0.3** - Gradient boosting
+- **lightgbm 4.1.0** - Gradient boosting
+- **catboost 1.2.2** - Gradient boosting
+
+### Data Processing
+- **pandas 2.1.4** - Data manipulation
+- **numpy 1.26.4** - Numerical computing
+
+### Frontend
+- **Vanilla JavaScript** - No frameworks
+- **CSS3** - Responsive design
+- **Chart.js Ready** - For future visualizations
+
+### DevOps
+- **Docker** - Containerization
+- **Python 3.11** - Runtime
+- **Git/GitHub** - Version control
+
+---
+
+## 📊 Performance
+
+### Model Metrics
+- **Training Time**: ~5 minutes (all 18 models)
+- **Best R² Score**: 0.4274 (Holt-Winters)
+- **Best MAPE**: 7.13% (Lasso α=1.0)
+- **Training Data**: 2007-2024 (68 quarters)
+
+### API Performance
+- **Cold Start**: ~2 seconds
+- **Warm Prediction**: <100ms  
+- **Model Loading**: Cached after first load
+- **Memory Usage**: ~500MB (all models loaded)
+
+---
+
+## 🧪 Testing
+
+\`\`\`bash
+# Test all 18 models
+python test_all_models.py
+
+# Expected output:
+# ✅ ML Models Passed: 13/13
+# ✅ TS Models Passed: 5/5  
+# ✅ Total Passed: 18/18
+# 🎉 ALL 18 MODELS WORKING PERFECTLY!
+\`\`\`
+
+---
+
+## 📈 Data Sources
+
+The model is trained on **28 economic indicators** (2007-2024):
+
+- **Macroeconomic**: GDP, Government Revenue/Spending, Population Income
+- **Trade**: Foreign Trade, Exports, Imports, Oil Price
+- **Banking**: Interest Rate, Portfolio, NPLs, ROA, ROE
+- **Engineered**: NPL%, Time Index, Quarterly Seasonality
+
+**Target Variable**: Nağd pul kredit satışı (Cash Loan Sales)
+
+---
+
+## 🤝 Contributing
+
+Contributions welcome! Please:
+
+1. Fork the repository
+2. Create feature branch
+3. Commit changes
+4. Push to branch
+5. Open Pull Request
+
+---
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) file
+
+---
+
+## 👤 Author
+
+**Ismat Samadov**
+
+- GitHub: [@Ismat-Samadov](https://github.com/Ismat-Samadov)
+- LinkedIn: [ismat-samadov](https://www.linkedin.com/in/ismat-samadov)
+
+---
+
+## 📞 Support
+
+For support, email ismetsemedov@gmail.com or open an issue.
+
+---
+
+**⭐ Star this repo if you find it helpful!**
+
+---
+
+*Last Updated: November 5, 2024*  
+*Version: 1.0.0*  
+*Status: Production Ready* ✅
