@@ -109,9 +109,10 @@ function populateModelsGrid(data) {
     const grid = document.getElementById('models-grid');
     grid.innerHTML = '';
 
-    // Show top 6 models
+    // Show top 6 models (filter out models with no metrics)
     const topModels = [...allModels]
-        .sort((a, b) => b.metrics.test_r2 - a.metrics.test_r2)
+        .filter(m => m.metrics && m.metrics.test_r2 !== undefined)
+        .sort((a, b) => (b.metrics?.test_r2 || -999) - (a.metrics?.test_r2 || -999))
         .slice(0, 6);
 
     topModels.forEach((model, index) => {
@@ -136,11 +137,11 @@ function createModelCard(model, rank) {
         <div class="model-metrics">
             <div class="model-metric">
                 <span class="model-metric-label">R²</span>
-                <span class="model-metric-value">${model.metrics.test_r2.toFixed(4)}</span>
+                <span class="model-metric-value">${model.metrics?.test_r2 ? model.metrics.test_r2.toFixed(4) : 'N/A'}</span>
             </div>
             <div class="model-metric">
                 <span class="model-metric-label">MAPE</span>
-                <span class="model-metric-value">${model.metrics.test_mape.toFixed(2)}%</span>
+                <span class="model-metric-value">${model.metrics?.test_mape ? model.metrics.test_mape.toFixed(2) + '%' : 'N/A'}</span>
             </div>
         </div>
     `;
@@ -156,8 +157,10 @@ async function loadStatistics() {
 
         document.getElementById('total-models').textContent = data.total_models;
 
-        if (data.best_overall) {
+        if (data.best_overall && data.best_overall.r2) {
             document.getElementById('best-r2').textContent = data.best_overall.r2.toFixed(4);
+        } else {
+            document.getElementById('best-r2').textContent = 'N/A';
         }
 
         console.log('✅ Statistics loaded');
@@ -231,11 +234,11 @@ function showSingleResult(data) {
     document.getElementById('prediction-period').textContent = `${data.year} Q${data.quarter}`;
     document.getElementById('prediction-model').textContent = data.model;
 
-    // Update metrics
-    document.getElementById('metric-r2').textContent = data.metrics.test_r2.toFixed(4);
-    document.getElementById('metric-rmse').textContent = formatNumber(data.metrics.test_rmse);
-    document.getElementById('metric-mae').textContent = formatNumber(data.metrics.test_mae);
-    document.getElementById('metric-mape').textContent = `${data.metrics.test_mape.toFixed(2)}%`;
+    // Update metrics (with fallbacks for missing metrics)
+    document.getElementById('metric-r2').textContent = data.metrics?.test_r2 ? data.metrics.test_r2.toFixed(4) : 'N/A';
+    document.getElementById('metric-rmse').textContent = data.metrics?.test_rmse ? formatNumber(data.metrics.test_rmse) : 'N/A';
+    document.getElementById('metric-mae').textContent = data.metrics?.test_mae ? formatNumber(data.metrics.test_mae) : 'N/A';
+    document.getElementById('metric-mape').textContent = data.metrics?.test_mape ? `${data.metrics.test_mape.toFixed(2)}%` : 'N/A';
 
     // Display scenarios
     displayScenarios(data.scenarios);
@@ -324,9 +327,10 @@ function openComparisonModal() {
     // Clear existing checkboxes
     checkboxContainer.innerHTML = '';
 
-    // Get top 5 models for pre-selection
+    // Get top 5 models for pre-selection (filter out models with no metrics)
     const topModels = [...allModels]
-        .sort((a, b) => b.metrics.test_r2 - a.metrics.test_r2)
+        .filter(m => m.metrics && m.metrics.test_r2 !== undefined)
+        .sort((a, b) => (b.metrics?.test_r2 || -999) - (a.metrics?.test_r2 || -999))
         .slice(0, 5)
         .map(m => m.name);
 
@@ -467,8 +471,8 @@ function showComparisonResults(data) {
                 <strong>${result.prediction_formatted} AZN</strong>
                 ${scenariosHtml}
             </td>
-            <td>${result.metrics.test_r2.toFixed(4)}</td>
-            <td>${result.metrics.test_mape.toFixed(2)}%</td>
+            <td>${result.metrics?.test_r2 ? result.metrics.test_r2.toFixed(4) : 'N/A'}</td>
+            <td>${result.metrics?.test_mape ? result.metrics.test_mape.toFixed(2) + '%' : 'N/A'}</td>
         `;
 
         tbody.appendChild(row);
