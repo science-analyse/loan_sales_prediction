@@ -1,3 +1,0 @@
-forecast_ts,model,point_forecast,lower_95,upper_95
-2025-07-01,stl_arima,127714301.45309372,,
-2025-10-01,stl_arima,111209384.04756103,,
