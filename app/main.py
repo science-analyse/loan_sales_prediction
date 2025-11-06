@@ -250,20 +250,31 @@ def prepare_ts_forecast(model, steps: int = 1, model_name: str = ""):
 
 def calculate_scenarios(base_prediction: float, model_info: dict):
     """Calculate optimistic and pessimistic scenarios based on model performance"""
-    # Use MAPE to determine uncertainty range
-    mape = model_info['metrics'].get('test_mape', 10.0)
+    # Get metrics with safe defaults
+    mape = model_info['metrics'].get('test_mape', 15.0)  # Default 15% uncertainty
     mae = model_info['metrics'].get('test_mae', 0)
 
-    # Optimistic: base - MAE (better than average)
-    # Pessimistic: base + MAE (worse than average)
-    # This gives realistic bounds based on actual model errors
+    # Determine uncertainty range
+    # If MAE is available and non-zero, use it; otherwise fall back to MAPE
+    if mae > 0:
+        # Use MAE-based approach (absolute error)
+        # Optimistic: better performance (lower error) = higher value
+        # Pessimistic: worse performance (higher error) = lower value
+        optimistic = base_prediction + mae * 0.5  # 50% of MAE improvement
+        pessimistic = base_prediction - mae * 0.5  # 50% of MAE decline
+    else:
+        # Use MAPE-based approach (percentage error)
+        # More robust when MAE is missing or zero
+        uncertainty_pct = mape / 100.0  # Convert to decimal
+        optimistic = base_prediction * (1 + uncertainty_pct * 0.5)  # 50% of MAPE improvement
+        pessimistic = base_prediction * (1 - uncertainty_pct * 0.5)  # 50% of MAPE decline
 
-    optimistic = base_prediction + mae * 0.5  # 50% of MAE improvement
-    pessimistic = base_prediction - mae * 0.5  # 50% of MAE decline
-
-    # Alternative: use MAPE percentage
-    # optimistic = base_prediction * (1 + mape / 100)
-    # pessimistic = base_prediction * (1 - mape / 100)
+    # Ensure scenarios are different from base (minimum 1% variation)
+    min_variation = abs(base_prediction) * 0.01  # 1% of base
+    if abs(optimistic - base_prediction) < min_variation:
+        optimistic = base_prediction + min_variation
+    if abs(pessimistic - base_prediction) < min_variation:
+        pessimistic = base_prediction - min_variation
 
     return {
         'optimistic': float(optimistic),
