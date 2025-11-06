@@ -1,0 +1,16 @@
+Forecast pipeline diagnostics - 2025-11-06T12:26:25.798391 UTC
+Data path: data/ml_ready_data.csv
+Series start: 2020-01-01 | end: 2025-04-01 | observations: 22
+Seasonal periods: 4
+Cross-validated model ranking (by mean sMAPE):
+         model    smape         mase
+     stl_arima 0.163522 8.575524e-01
+          sma4 0.167135 8.355228e-01
+           ets 0.179329 9.220510e-01
+seasonal_naive 0.228028 1.082017e+00
+   sarima_grid 0.880327 6.942624e+61
+
+Selected model: stl_arima (STL_deseasonalize + ARIMA ((2, 1, 2), (0, 0, 0, 4)))
+Forecast horizon (steps): 2
+Forecast timestamp(s): [datetime.date(2025, 7, 1), datetime.date(2025, 10, 1)]
+Point forecast(s): [127714301.45309372, 111209384.04756103]
