@@ -213,7 +213,7 @@ def get_historical_sales(year: int, quarter: int, years_back: int = 3):
 
 
 def prepare_ml_features(year: int = None, quarter: int = None):
-    """Load PCA features for ML model prediction
+    """Load PCA features for ML model prediction with temporal extrapolation
 
     Args:
         year: Target year for prediction (optional)
@@ -222,16 +222,14 @@ def prepare_ml_features(year: int = None, quarter: int = None):
     Returns:
         Feature array for prediction
 
-    Note: Since PCA features exclude temporal information, we use the most recent
-    features as a baseline. For future predictions, we could interpolate or use
-    the last known pattern, but currently ML models don't have temporal awareness.
+    Note: For historical dates, uses actual features. For future dates,
+    extrapolates features based on recent trends and seasonal patterns.
     """
     df_pca = pd.read_csv(DATA_DIR / 'pca_features.csv')
+    df_orig = pd.read_csv(DATA_DIR / 'ml_ready_data.csv')
 
     # If year/quarter specified, try to find matching row
     if year is not None and quarter is not None:
-        # Load original data to find matching time period
-        df_orig = pd.read_csv(DATA_DIR / 'ml_ready_data.csv')
         matching_rows = df_orig[(df_orig['Year'] == year) & (df_orig['Quarter'] == quarter)]
 
         if not matching_rows.empty:
@@ -242,9 +240,51 @@ def prepare_ml_features(year: int = None, quarter: int = None):
                 features = df_pca[['PC1', 'PC2', 'PC3', 'PC4', 'PC5', 'PC6']].iloc[idx].values
                 return features.reshape(1, -1)
 
+        # For future dates: extrapolate features based on trends
+        # Get last known date
+        last_year = int(df_orig['Year'].iloc[-2])  # -2 because last row might be incomplete
+        last_quarter = int(df_orig['Quarter'].iloc[-2])
+
+        # Calculate quarters difference
+        quarters_ahead = (year - last_year) * 4 + (quarter - last_quarter)
+
+        if quarters_ahead > 0:
+            # Use recent trend (last 8 quarters) to extrapolate
+            lookback = min(8, len(df_pca))
+            recent_features = df_pca[['PC1', 'PC2', 'PC3', 'PC4', 'PC5', 'PC6']].iloc[-lookback:].values
+
+            # Calculate linear trend for each PC
+            trends = []
+            for i in range(6):
+                pc_values = recent_features[:, i]
+                # Simple linear regression slope
+                x = np.arange(len(pc_values))
+                trend = np.polyfit(x, pc_values, 1)[0]  # Get slope
+                trends.append(trend)
+
+            # Get base features from last complete observation
+            base_features = df_pca[['PC1', 'PC2', 'PC3', 'PC4', 'PC5', 'PC6']].iloc[-2].values
+
+            # Extrapolate features
+            extrapolated = base_features + np.array(trends) * quarters_ahead
+
+            # Add seasonal component (quarter-specific adjustment)
+            # Calculate average seasonal pattern for this quarter from historical data
+            quarter_mask = df_orig['Quarter'] == quarter
+            if quarter_mask.sum() > 0:
+                quarter_indices = df_orig[quarter_mask].index
+                # Get valid indices within pca dataframe
+                valid_indices = [i for i in quarter_indices if i < len(df_pca)]
+                if len(valid_indices) >= 2:
+                    quarter_features = df_pca.iloc[valid_indices][['PC1', 'PC2', 'PC3', 'PC4', 'PC5', 'PC6']].values
+                    seasonal_adjustment = quarter_features.mean(axis=0) - df_pca[['PC1', 'PC2', 'PC3', 'PC4', 'PC5', 'PC6']].mean().values
+                    # Apply 50% of seasonal adjustment to avoid over-correction
+                    extrapolated += seasonal_adjustment * 0.5
+
+            return extrapolated.reshape(1, -1)
+
     # Fallback: Use the most recent known features
-    # This is used when predicting future quarters not in historical data
-    features = df_pca[['PC1', 'PC2', 'PC3', 'PC4', 'PC5', 'PC6']].iloc[-1].values
+    features = df_pca[['PC1', 'PC2', 'PC3', 'PC4', 'PC5', 'PC6']].iloc[-2].values
     return features.reshape(1, -1)
 
 
@@ -262,9 +302,15 @@ def calculate_forecast_steps(target_year: int, target_quarter: int) -> int:
     if df.empty:
         return 1  # Default to 1 step if no data
 
-    # Get the last observation date
-    last_year = int(df['Year'].iloc[-1])
-    last_quarter = int(df['Quarter'].iloc[-1])
+    # Get the last complete observation (skip rows with missing sales data)
+    df_complete = df.dropna(subset=['Nağd_pul_kredit_satışı'])
+
+    if df_complete.empty:
+        return 1
+
+    # Get the last complete observation date
+    last_year = int(df_complete['Year'].iloc[-1])
+    last_quarter = int(df_complete['Quarter'].iloc[-1])
 
     # Calculate quarters difference
     # Each year has 4 quarters
@@ -297,7 +343,8 @@ def prepare_ts_forecast(model, target_year: int = None, target_quarter: int = No
         if 'SARIMAX' in model_name:
             # Load historical data to get the time index
             df = load_historical_data()
-            last_index = len(df)
+            df_complete = df.dropna(subset=['Nağd_pul_kredit_satışı'])
+            last_index = len(df_complete)
             # Create exogenous variable (time trend) for future steps
             exog_future = np.arange(last_index, last_index + steps).reshape(-1, 1)
             forecast = model.forecast(steps=steps, exog=exog_future)
