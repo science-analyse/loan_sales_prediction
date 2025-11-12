@@ -70,6 +70,11 @@ def apply_data_transformations(df):
     df['NPLs'] = df['NPLs'] * 1000
     print("✅ NPLs converted from thousands to actual values")
 
+    # Calculate oil price origin amount
+    if 'Oil_Price' in df.columns:
+        df['Oil_Price_Origin_Amount'] = (df['Oil_Price'] / 1.7) * 1000
+        print("✅ Oil_Price_Origin_Amount calculated: (Oil_Price / 1.7) × 1000")
+
     return df
 
 
